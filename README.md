@@ -24,25 +24,23 @@ Leveraging Google's cutting-edge Gemini 2.5 Flash Image Preview, we transform si
 
 ---
 
-## 🖼️ **Screenshots**
-
-![MangaForge AI Interface](https://via.placeholder.com/800x400/4ecdc4/ffffff?text=MangaForge+AI+Interface)
+![MangaForge AI Interface](https://github.com/jaygupta17/manga/blob/main/ss.png)
 _One-click manga creation interface_
 
-![Generated Manga Example](https://via.placeholder.com/800x400/ff6b6b/ffffff?text=Generated+Manga+Example)
-_Professional manga panels from simple prompts_
+![MangaForge AI Interface](https://github.com/jaygupta17/manga/blob/main/ss2.png)
+_Easy to Use
 
 ---
 
 ## Examples
 
-![Deadlocks in Operating System](https://github.com/jaygupta17/manga/blob/main/examples/deadlocks.pdf)
+[Deadlocks in Operating System](https://github.com/jaygupta17/manga/blob/main/examples/deadlocks.pdf)
 _Fun Educational Manga_
 
-![From Neuron to Neural Network](https://github.com/jaygupta17/manga/blob/main/examples/from_neuron_to_neural_network.pdf)
+[From Neuron to Neural Network](https://github.com/jaygupta17/manga/blob/main/examples/from_neuron_to_neural_network.pdf)
 _Journey from Neuron to Neural network_
 
-![Life](https://github.com/jaygupta17/manga/blob/main/examples/life.pdf)
+[Life](https://github.com/jaygupta17/manga/blob/main/examples/life.pdf)
 _A short wholesome Manga_
 
 
