@@ -27,7 +27,7 @@ Leveraging Google's cutting-edge Gemini 2.5 Flash Image Preview, we transform si
 ![MangaForge AI Interface](https://github.com/jaygupta17/manga/blob/main/ss.png)
 _One-click manga creation interface_
 
-![MangaForge AI Interface](https://github.com/jaygupta17/manga/blob/main/ss2.png)
+[![Demo](https://img.youtube.com/vi/xtad8RJK5Cc/0.jpg)](https://www.youtube.com/watch?v=xtad8RJK5Cc)
 _Easy to Use
 
 ---
