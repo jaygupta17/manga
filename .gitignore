@@ -2,7 +2,6 @@ venv/
 __pycache__/
 .env
 .venv/
-*.png
 nanobanana_data/*.png
 nanobanana_data/*.pdf
 nanobanana_data/*.json
