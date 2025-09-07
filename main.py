@@ -2,13 +2,11 @@ import streamlit as st
 import asyncio
 import os
 import json
-import time
 from datetime import datetime
 from pathlib import Path
 
-# Import existing modules
-from models import MangaRequest, CharacterRequest, ChapterRequest, PanelRequest, MainRequest
-from services import generate_chapters, generate_characters, process_chapter, process_panel
+from models import MangaRequest, ChapterRequest, PanelRequest, MainRequest
+from services import generate_chapters, process_chapter, process_panel
 from utils import clean_string, get_pdf, generate_image
 from prompts import character_prompt
 from gemini import client
@@ -36,7 +34,7 @@ st.markdown("""
     .section-header {
         font-size: 1.5rem;
         font-weight: bold;
-        margin-top: 2rem;
+        margin-top: 1rem;
         margin-bottom: 1rem;
         color: #2c3e50;
     }
@@ -305,34 +303,25 @@ def main_page():
     
     # Input form
     with st.form("manga_generation_form"):
-        st.markdown('<div class="section-header">📝 Story Input</div>', unsafe_allow_html=True)
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            prompt = st.text_area(
-                "Main Story Prompt",
-                placeholder="Enter your manga story idea here...\n\nExample: A young ninja discovers they have the power to control shadows and must learn to use this ability to protect their village from an ancient evil.",
+        prompt = st.text_area(
+                "Prompt",
+                placeholder="Enter your manga story idea here...",
                 height=150,
+                value="A young ninja discovers they have the power to control shadows and must learn to use this ability to protect their village from an ancient evil.",
                 help="Describe the main concept, characters, and world of your manga"
             )
-            
-            context = st.text_area(
-                "Additional Context",
-                placeholder="Any additional world-building, character backgrounds, or story elements...",
-                height=100,
-                help="Provide additional context about your story world"
-            )
+
+        files = st.file_uploader("Upload Files (Optional)", type=["png", "jpg", "jpeg","pdf",".docx",".doc",'.txt','.csv','.xls','.xlsx','.ppt','.pptx'], help="Upload files for More Context",accept_multiple_files=True)
+            # Save files to data directory
+        files_list = []
+        for file in files:
+                    file_path = f"{DATA_DIR}/{file.name}"
+                    with open(file_path, "wb") as f:
+                        f.write(file.getvalue())
+                    files_list.append(file_path)
         
-        with col2:
-            instructions = st.text_area(
-                "Special Instructions",
-                placeholder="Any specific requirements for art style, pacing, or story elements...",
-                height=100,
-                help="Special instructions for generation"
-            )
-            
-            num_chapters = st.slider(
+        
+        num_chapters = st.slider(
                 "Number of Chapters",
                 min_value=1,
                 max_value=10,
@@ -340,11 +329,10 @@ def main_page():
                 help="How many chapters to generate"
             )
             
-            lang = st.selectbox(
+        lang = st.text_input(
                 "Language for Dialogues",
-                options=["english", "spanish", "french", "german", "japanese", "korean", "chinese"],
-                index=0,
-                help="Language for character dialogues (other elements remain in English)"
+                value="English",
+                help="Language for character dialogues"
             )
         
         # Advanced options
@@ -365,7 +353,7 @@ def main_page():
                     index=0,
                     help="Choose the AI model for generation",
                 )
-        
+            
         submitted = st.form_submit_button("🚀 Generate Manga", type="primary")
     
     if submitted:
@@ -376,11 +364,12 @@ def main_page():
         # Create request object
         request = MainRequest(
             prompt=f"{prompt}\n\n{art_style if art_style else ''}",
-            context=context,
-            instructions=instructions,
+            context="",
+            instructions="",
             num_chapters=num_chapters,
             lang=lang,
-            model=model_choice
+            model=model_choice,
+            files=files_list
         )
         
         # Start generation process
@@ -408,12 +397,13 @@ async def generate_manga_async(request: MainRequest):
             instructions=request.instructions,
             num_chapters=request.num_chapters,
             lang=request.lang,
-            model=request.model
+            model=request.model,
+            files=request.files
         )
         
         manga = await generate_chapters(manga_request)
         st.session_state.manga_data = manga
-        os.makedirs(f"nanobanana_data/{manga.title}", exist_ok=True)
+        os.makedirs(f"{DATA_DIR}/{manga.title}", exist_ok=True)
         
         # Display manga details immediately
         with manga_info_container:
@@ -457,7 +447,7 @@ async def generate_manga_async(request: MainRequest):
                 'detailed_appearance': character.detailed_appearence,
                 'art_style_description': manga.global_style.art_style_description
             })
-            path = f'nanobanana_data/{await clean_string(manga.title)}/{await clean_string(character.character_id)}.png'
+            path = f'{DATA_DIR}/{await clean_string(manga.title)}/{await clean_string(character.character_id)}.png'
             path = await generate_image(cprompt, path, [])
             
             # Update the character image in real-time
@@ -527,7 +517,7 @@ async def generate_manga_async(request: MainRequest):
         progress_bar.progress(90)
         
         if all_images:
-            pdf_path = await get_pdf(all_images, f"nanobanana_data/{await clean_string(manga.title)}/generated_manga.pdf")
+            pdf_path = await get_pdf(all_images, f"{DATA_DIR}/{await clean_string(manga.title)}/generated_manga.pdf")
             st.session_state.generated_pdf = pdf_path
         
         progress_bar.progress(100)
@@ -561,7 +551,7 @@ async def generate_manga_async(request: MainRequest):
         
         # Display final results summary
         with st.container():
-            st.markdown('<div class="section-header">�� Generation Summary</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-header">📊 Generation Summary</div>', unsafe_allow_html=True)
             col1, col2, col3 = st.columns(3)
             
             with col1:

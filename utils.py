@@ -1,3 +1,4 @@
+import asyncio
 import img2pdf
 from PIL import Image
 from gemini import client
@@ -5,11 +6,24 @@ from pydantic import BaseModel
 from io import BytesIO
 import os
 
-async def structured(prompt:str, schema:BaseModel | list[BaseModel],model:str='gemini-2.5-pro'):
+async def upload_and_wait_for_file(file:str):
   try:
+    file = await client.aio.files.upload(file=file)
+    while file.state!="ACTIVE":
+      if file.state=="FAILED":
+        raise Exception(f"File {file.name} failed to upload")
+      await asyncio.sleep(0.4)
+    return file
+  except Exception as e:
+    print(e)
+    raise e
+
+async def structured(prompt:str, schema:BaseModel | list[BaseModel],model:str='gemini-2.5-pro',files:list[str]=[]):
+  try:
+    files = [await upload_and_wait_for_file(file) for file in files if os.path.exists(file)] if files else []
     response = client.models.generate_content(
       model=model,
-      contents=[prompt],
+      contents=[*files,prompt] if files else [prompt],
       config={
           "response_mime_type": "application/json",
           "response_schema": schema,

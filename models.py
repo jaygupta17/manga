@@ -68,7 +68,8 @@ class MainRequest(BaseModel):
   num_chapters: int = 5
   lang:str = 'english'
   model: str = 'gemini-2.5-pro'
-
+  files: list[str] = []
+  
 class MangaRequest(BaseModel):
   prompt: str
   context: str
@@ -76,7 +77,8 @@ class MangaRequest(BaseModel):
   num_chapters: int = 5
   lang:str = 'english'
   model: str = 'gemini-2.5-pro'
-
+  files: list[str] = []
+  
 class ChapterRequest(BaseModel):
   chapter: Chapter
   global_style: GlobalStyle

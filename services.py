@@ -6,7 +6,7 @@ DATA_DIR = Path("nanobanana_data")
 
 async def generate_chapters(req: MangaRequest) -> Manga:
   formatted_prompt = chapter_prompt.format(**req.model_dump())
-  result: Manga = await structured(formatted_prompt,Manga,req.model)
+  result: Manga = await structured(formatted_prompt,Manga,req.model,req.files)
   return result
 
 async def generate_characters(req: CharacterRequest):
