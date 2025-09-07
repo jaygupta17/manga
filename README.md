@@ -123,7 +123,7 @@ streamlit run main.py
 
 **🍌 Built for the Nano Banana Hackathon**
 
-[![Nano Banana](https://www.kaggle.com/competitions/113664/images/header)](https://www.kaggle.com/competitions/banana)
+[Nano Banana](https://www.kaggle.com/competitions/banana)
 
 **Showcasing the power of Gemini 2.5 Flash Image Preview**
 
