@@ -34,13 +34,13 @@ _Easy to Use
 
 ## Examples
 
-[Deadlocks in Operating System](https://github.com/jaygupta17/manga/blob/main/examples/deadlocks.pdf)
+[Deadlocks in Operating System](https://drive.google.com/file/d/1BYJmXUeWdLssS9bPKzpBvsILgT7-__Kc/view?usp=drive_link)
 _Fun Educational Manga_
 
-[From Neuron to Neural Network](https://github.com/jaygupta17/manga/blob/main/examples/from_neuron_to_neural_network.pdf)
+[From Neuron to Neural Network](https://drive.google.com/file/d/1zcFitFNiR8avt_ZRTfIRTUPq3V0DdmBY/view?usp=drive_link)
 _Journey from Neuron to Neural network_
 
-[Life](https://github.com/jaygupta17/manga/blob/main/examples/life.pdf)
+[Life](https://drive.google.com/file/d/1dozXLK6xpNoBOCBtgjqeQzgUjQm_xMzZ/view?usp=drive_link)
 _A short wholesome Manga_
 
 
